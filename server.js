@@ -7,8 +7,10 @@ import cors from "cors";
 const server = express();
 const PORT = 3000;
 
-server.use(cors());
-server.use(express.json());
+server.use(cors()); // Enable CORS for all routes and origins. This is important for allowing requests from different domains.
+
+server.use(express.json()); // Middleware to parse JSON bodies in requests. This is essential for handling POST requests with JSON payloads.
+// Middleware means functions that have access to the request and response objects. They can modify these objects, end the request-response cycle, or call the next middleware in the stack.
 
 // { taskDescription: "Random Task to complete", status: "todo" responsible: ["lasith", "ashen"]}
 const tasks = [];
@@ -24,7 +26,7 @@ server.post("/tasks", (req, res) => {
   try {
     const task = req.body;
     tasks.push(task);
-    res.status(201).send("successfully added the task");
+    res.status(201).send("Successfully added the task");
   } catch {
     res.status(500).send("Failed to add the task");
   }
